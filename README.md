@@ -1,9 +1,11 @@
 # Improving Battery Life of Ultra-thin Ultrabooks (Linux)
 
 
-Greetings,
 
-This is the second part of the power saving / laptop cooldown methods based on dynamic frequency down-scaling with Intel p_state. Link to the [first part](https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/)
+Greetings, <br />
+
+
+This is the second part of the power saving / laptop cooldown methods based on dynamic frequency down-scaling with Intel p_state. Link to the [first part](https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/).
 
 
 ## Preface
@@ -37,7 +39,7 @@ Memory: 2639MiB / 31997MiB
 ```
 15" built-in display @ 144Hz: Embedded 4 Cells Polymer battery pack – 55Wh (57.1Wh max)    
 ```
-> Why only 55Wh, System76? The 97-Wh XPS 15 or 80-Wh Thinkpad Xtreme put this Oryx Pro 4 to shame in term of battery.
+> [rant] Why only 55Wh, System76? The 97Wh XPS 15 or 80Wh Thinkpad Xtreme really put Oryx Pro 4 to shame in term of battery.
 
 
 ### Results:
@@ -55,7 +57,7 @@ Memory: 2639MiB / 31997MiB
 
 While `powertop` reports the current recharge rate per process at the moment, it is not accurate to use it to measure the total power consumption. A tool that statistically measures the power consumption over a long period of time (7-10 minutes) will produce more reliable results. In this end, we use `powerstat`.
 
-From the evaluation, method 1 can help oryx4 laptop last about 5 hours under light load (I often got 5h - 5.2h). While method 4 can prolong the laptop battery to 6 hours in idle (but I find it not very practical since no one just opens the laptop and do nothing). 
+From the evaluation, method 1 can help oryx4 laptop last about 5 hours under light load (I often got 5h - 5.2h). While method 4 can prolong the laptop battery to 6 hours in idle (a convenient test case for different profiles, not practical use case). 
 
 ![Method 1 and Method 2](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/method-1_and_method-2.png)
 ![Method 3 and Method 4](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/method-3_and_method-4.png)
@@ -87,7 +89,7 @@ Require: an active intel p_state driver (power governor = powersave(default))
 **Battery Mode**:
 ```bash
 echo 19 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
-echo  19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
+echo 19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
 echo  1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 ```
 *Explain*: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time. 
@@ -98,7 +100,7 @@ echo  1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 **AC Mode**:
 ```bash
 echo 80 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
-echo  19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
+echo 19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
 echo  0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 ```
 *Explain*: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time.
@@ -106,9 +108,11 @@ echo  0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 * min-performance \<- 19/100 is equivalent to set minimum CPU freq @ 800MHz  (intel i7-8750H)
 * Turbo Boost \<- enable
 
-With these setting, the maximum CPU temperature is 40C (light load + no TurboBoost) on battery and 75-80C (high load + TurboBoost) with AC plugged in.
+With these setting, the maximum CPU temperature is 40C (light load + no TurboBoost) on battery and 75-80C (high load + TurboBoost) with AC plugged in. Refer to [this post](https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/) for the relation between frequency and temperature.
 
 To automate the process, I use TLP. You can find my TLP config [here](https://github.com/drNoob13/batteryimprove/blob/master/tlp)
+
+*Please read thru the config before applying. Also, I encourage you to peruse the tlp document [here](https://linrunner.de/en/tlp/docs/tlp-configuration.html)*
 
 ### Disable unnecessary processes
 
@@ -127,7 +131,7 @@ sudo ifconfig enp4s0 down
 ```
 *Note*: ethernet could be on idle (i.e. no cable hooked up), but `powertop` would report it as in full utilization.
 
-Refer to the bash script (execute after restart on battery): https://github.com/drNoob13/batteryimprove/blob/master/run_bat_powersave.sh
+Refer to the bash script (execute after restart on battery): [here](https://github.com/drNoob13/batteryimprove/blob/master/run_bat_powersave.sh)
 
 ### Disable unused CPU cores (runtime)
 
@@ -148,14 +152,14 @@ echo 0 | sudo tee /sys/devices/system/cpu/cpu4/online
 
 Replace `echo 0` by `echo 1` if you want to turn these CPU cores back on.
 
-Refer to the bash script (execute after restart on battery): https://github.com/drNoob13/batteryimprove/blob/master/run_bat_powersave.sh
+Refer to the bash script (execute after restart on battery) [here](https://github.com/drNoob13/batteryimprove/blob/master/run_bat_powersave.sh). 
 
 
 ### Tuning with powertop
 
 * Often it requires a calibration `powertop --calibrate` on battery for an extended period of time before you can start to tune.
 * Run `powertop --auto-tune` to let powertop tweak the bad processes that are eating your battery.
-* Refer to: https://wiki.archlinux.org/index.php/powertop
+* Refer to [reference](https://wiki.archlinux.org/index.php/powertop).
 
 ----
 
