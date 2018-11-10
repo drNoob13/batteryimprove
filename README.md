@@ -3,17 +3,17 @@
 Greetings,
 
 
-This is the second part of the power saving / laptop cooldown methods based on dynamic frequency down-scaling with Intel p_state. Here is the link to the first part: https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/
+This is the second part of the power saving / laptop cooldown methods based on dynamic frequency down-scaling with Intel p_state. Link to the [first part](https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/)
 
 
 # Preface
    --------- 
 
-I decided to grab a mobile workstation for my computer vision work. The laptop I bought has worked great; however, its battery life is shamefully low (spec: 4-cell 55Wh). Everytime the laptop ran without AC plugged, the battery drained like a waterfall (and the CPU was hot and kept throttling as hell). My current travel scheulde only makes it worse. It was so annoying to the point that I decided to do something to make it better. This post is the result of my little research. 
+I decided to grab a mobile workstation for my computer vision work. The laptop I bought has worked great; however, its battery capacity is shamefully low (4-cell 55Wh). Everytime the laptop ran without an AC plugged, the battery drained like a waterfall (and the CPU was hot and kept throttling as hell). My current travel scheulde only makes it worse. It was so annoying to the point that I decided to do something to make it better. In this post, I share some results of my little research. 
 
-This post introduces a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs, plus an automated method for keeping laptop cool. The method sets the peformance under AC/batter by Intel p_state and uses TLP as a frontend.
+This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs, plus an automated method for keeping the laptops cool. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend.
  
-Test Spec
+#### Test Spec
 ```
 OS: Ubuntu 18.04.1 LTS x86_64 
 Host: Oryx Pro oryp4 
@@ -34,22 +34,30 @@ GPU: NVIDIA GeForce GTX 1070 Mobile
 Memory: 2639MiB / 31997MiB
 ```
 
-Battery:
+#### Battery:
 ```
-15" built-in display @ 144Hz: Embedded 4 Cells Polymer battery pack – 55Wh    <why only 55Wh, System76?> 
-(the 97-Wh XPS 15 or 80-Wh Thinkpad Xtreme put this laptop to shame in term of battery)
+15" built-in display @ 144Hz: Embedded 4 Cells Polymer battery pack – 55Wh (57.1Wh max)    
 ```
+> Why only 55Wh, System76? The 97-Wh XPS 15 or 80-Wh Thinkpad Xtreme put this Oryx Pro 4 to shame in term of battery.
 
-Results: I use `powerstat` to evaluate the battery discharge rate of different profiles.
 
-| Method  | Discharge rate | Load | Method Description |
-| ------------- | ------------- | ------------- | ------------- |
-| 1  | 11.64W | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 1tab), `psensor`| Intel GPU + this combined method + backlight display @ 15% |
-| 2  |   | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 1tab), `psensor`| Intel GPU + TurboBoost disable + perf:19%-50% + original config + backlight display @ 15% |
-| 3  | 23.56W | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 1tab), `psensor`| nvidia GPU (GTX 1070 max-q) + TurboBoost disable + perf:19%-50% + original config + backlight display @ 15% |
-| 4 | 9.11W | No load (idle) | Intel GPU + this combined method + backlight display @ 15% |
+## Results:
 
-<FIGURE>
+`powerstat` is used to evaluate the battery discharge rate of different profiles.
+
+| Method  | Discharge rate | CPU Temp. | Load | Method Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1  | 11.64W | 38-40C| Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 tab), `psensor`| Intel GPU + this combined method + backlight display @ 15% |
+| 2  | 16.41W  | 41-43C | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 tab), `psensor`| Intel GPU + TurboBoost disable + perf:19%-50% + original config + backlight display @ 15% |
+| 3  | 23.56W | 48-50C | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 tab), `psensor`| nvidia GPU (GTX 1070 max-q) + TurboBoost disable + perf:19%-50% + original config + backlight display @ 15% |
+| 4 | 9.11W | 36C | No load (idle) | Intel GPU + this combined method + backlight display @ 15% |
+
+While `powertop` reports the current recharge rate per process at the moment, it is not accurate to use it to measure the total power consumption. A tool that statistically measures the power consumption over a long period of time (7-10 minutes) will produce more reliable results. In this end, we use `powerstat`.
+
+From the evaluation, method 1 can help oryx4 laptop last about 5 hours under light load (I often got 5h - 5.2h). While method 4 can prolong the laptop battery to 6 hours in idle (but I find it not very practical since no one just opens the laptop and do nothing). 
+
+![Method 1 and Method 2](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/method-1_and_method-2.png)
+![Method 3 and Method 4](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/method-3_and_method-4.png)
 
 
 # Prerequisites
@@ -76,29 +84,29 @@ Instead of manual underclocking the CPU, I use a dynamic method to down-scale th
 Require: an active intel p_state driver (power governor = powersave(default))
          (to check: `cat /sys/devices/system/cpu/intel_pstate/status`)
 
-Battery Mode:
+**Battery Mode**:
 ```bash
 echo 19 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
 echo  19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
 echo  1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 ```
-Explain: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time. 
+*Explain*: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time. 
 * max-performance <- 19/100 is equivalent to set maximum CPU freq @ 800MHz  (intel i7-8750H)
 * min-performance <- 19/100 is equivalent to set minimum CPU freq @ 800MHz (intel i7-8750H)
 * Turbo Boost <- disable
 
-AC Mode:
+**AC Mode**:
 ```bash
 echo 80 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
 echo  19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
 echo  0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 ```
-Explain: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time.
+*Explain*: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time.
 * max-performance \<- 80/100 is equivalent to set maximum CPU freq @ 3400MHz (intel i7-8750H)
 * min-performance \<- 19/100 is equivalent to set minimum CPU freq @ 800MHz  (intel i7-8750H)
 * Turbo Boost \<- enable
 
-With these setting, the maximum CPU temperature is 40C on battery and 75-80C (high load) with AC plugged in.
+With these setting, the maximum CPU temperature is 40C (light load + no TurboBoost) on battery and 75-80C (high load + TurboBoost) with AC plugged in.
 
 To automate the process, I use TLP. My TLP config at: https://github.com/drNoob13/batteryimprove
 
@@ -112,11 +120,12 @@ To disable bluetooth when on battery, change the following line in your TLP conf
 
 ### Disable Ethernet (runtime)
 
-Ethernet consumes huge energy when it is used and considerable energy when it is not used/idle. To turn off your ethernet, refer to `ifconfig` for the ethernet interface name, then kill it
+Ethernet consumes huge energy when it is used (12-14W) and considerable energy (0.5-1W) when it is not used/idle. To turn off your ethernet, refer to `ifconfig` for the ethernet interface name, then kill it
 
 ```bash
 sudo ifconfig enp4s0 down
 ```
+*Note*: ethernet could be on idle (i.e. no cable hooked up), but `powertop` would report it as in full utilization.
 
 Refer to the bash script (execute after restart on battery): https://github.com/drNoob13/batteryimprove/blob/master/run_bat_powersave.sh
 
