@@ -53,7 +53,7 @@ Memory: 2639MiB / 31997MiB
 | 3  | 23.56W | 48-50C | Light load: `gnome-system-monitor`, `powerstat`, `powertop`, background: Google Chrome (1 tab), `psensor`| nvidia GPU (GTX 1070 max-q) + TurboBoost disable + perf:19%-50% + original config + backlight display @ 15% |
 | 4 | 9.11W | 36C | No load (idle) | Intel GPU + this combined method + backlight display @ 15% |
 
-*Note*: I used `system76-power` to disable the nvidia GPU.
+*Note: I used [system76-power](https://github.com/pop-os/system76-power) to disable the nvidia GPU.*
 
 While `powertop` reports the current recharge rate per process at the moment, it is not accurate to use it to measure the total power consumption. A tool that statistically measures the power consumption over a long period of time (7-10 minutes) will produce more reliable results. In this end, we use `powerstat`.
 
