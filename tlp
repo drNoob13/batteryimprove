@@ -64,7 +64,7 @@ CPU_HWP_ON_BAT=power
 # Values are stated as a percentage of the available performance.
 # Requires an Intel Core i processor with intel_pstate driver.
 CPU_MIN_PERF_ON_AC=0
-CPU_MAX_PERF_ON_AC=75
+CPU_MAX_PERF_ON_AC=80
 CPU_MIN_PERF_ON_BAT=0
 CPU_MAX_PERF_ON_BAT=10
 
