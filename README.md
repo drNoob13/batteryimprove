@@ -2,15 +2,7 @@
 
 
 
-Greetings, <br />
-
-
-This is the second part of the power saving / laptop cooldown methods based on dynamic frequency down-scaling with Intel p_state. Link to the [first part](https://www.reddit.com/r/linux/comments/9nv46i/underclocking_highend_mobile_cpus_for_cooler/).
-
-
 ## Preface
-
-I decided to grab a mobile workstation for my computer vision work. The laptop I bought has worked great; however, its battery capacity is shamefully low (4-cell 55Wh). Everytime the laptop ran without an AC plugged, the battery drained like a waterfall (and the CPU was hot and kept throttling as hell). My current travel scheulde only makes it worse. It was so annoying to the point that I decided to do something to make it better. In this post, I share some results of my little research. 
 
 This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs, plus an automated method for keeping the laptops cool. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend.
  
@@ -39,8 +31,6 @@ Memory: 2639MiB / 31997MiB
 ```
 15" built-in display @ 144Hz: Embedded 4 Cells Polymer battery pack – 55Wh (57.1Wh max)    
 ```
-> [rant] Why only 55Wh, System76? The 97Wh XPS 15 or 80Wh Thinkpad Xtreme really put Oryx Pro 4 to shame in term of battery.
-
 
 ### Results:
 
