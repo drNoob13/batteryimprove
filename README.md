@@ -55,6 +55,10 @@ From the evaluation, method 1 can help oryx4 laptop last about 5 hours under lig
 
 ### Prerequisites
 
+* Intel p_state driver
+
+### Optional (but recommended)
+
 * [TLP](https://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html) to automate the setting below
 * powertop
 
