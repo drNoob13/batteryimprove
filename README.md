@@ -1,4 +1,4 @@
-# Improving Battery Life of Ultra-thin Ultrabooks (Linux)
+# Improving Battery Life of Ultra-thin Ultrabooks with 6-/9-core CPU (Linux)
 
 
 
@@ -91,6 +91,8 @@ echo  1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 * max-performance <- 19/100 is equivalent to set maximum CPU freq @ 800MHz  (intel i7-8750H)
 * min-performance <- 19/100 is equivalent to set minimum CPU freq @ 800MHz (intel i7-8750H)
 * Turbo Boost <- disable
+**Note**: You should experiment and try different `max_perf_pct value` and see what best suits your need. Suggest: if you are using in battery mode, try first with a value between 20-30%. If you are on AC, try a value between 70-90%.
+
 
 **AC Mode**:
 ```bash
