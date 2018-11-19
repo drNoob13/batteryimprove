@@ -25,6 +25,7 @@ CPU: Intel i7-8750H (12) @ 2.200GHz
 GPU: Intel Integrated Graphics (HD 630)
 GPU: NVIDIA GeForce GTX 1070 Mobile 
 Memory: 2639MiB / 31997MiB
+Drive: 01 500GB M2 SSD + 01 256GB M2 SSD
 ```
 
 ##### Battery:
