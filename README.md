@@ -6,6 +6,18 @@
 
 This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs while reducing the heat generation at the same time. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend for automation.
  
+ 
+### Summary
+
+* Intel p_state driver
+* Completely software method (will not harm your hardware)
+* Intel processors with 6-/8- physical cores
+* Adjust perf for dynamic frequency downscaling, thus significantly reduce power consumption + heat
+* Disable unused CPU cores to maximize battery (not necessary for laptops with high-capacity battery)
+* Disable unused hardware in battery mode (ethernet/bluetooth..)
+* Can be used in tandem with other methods such as reducing CPU operating voltage (undervolt) or changing thermal conductivity substance (repaste)
+ 
+ 
 ##### Test Spec
 [System76 Oryx Pro 4](https://system76.com/laptops/oryx)
 ```
