@@ -104,6 +104,7 @@ echo  1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 * max-performance <- 19/100 is equivalent to set maximum CPU freq @ 800MHz  (intel i7-8750H)
 * min-performance <- 19/100 is equivalent to set minimum CPU freq @ 800MHz (intel i7-8750H)
 * Turbo Boost <- disable
+
 **Note**: You should experiment and try different `max_perf_pct value` and see what best suits your need. Suggest: if you are using in battery mode, try first with a value between 20-30%. If you are on AC, try a value between 70-90%.
 
 
@@ -113,7 +114,7 @@ echo 80 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
 echo 19 | sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
 echo  0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
 ```
-*Explain*: Set the maximum performance allowed equal to 19% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time.
+*Explain*: Set the maximum performance allowed equal to 80% of the highest possible performance. The Intel p_state driver will down-scale the CPU frequency accordingly. This can be executed at run-time.
 * max-performance \<- 80/100 is equivalent to set maximum CPU freq @ 3400MHz (intel i7-8750H)
 * min-performance \<- 19/100 is equivalent to set minimum CPU freq @ 800MHz  (intel i7-8750H)
 * Turbo Boost \<- enable
