@@ -7,9 +7,10 @@
 This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs while reducing the heat generation at the same time. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend for automation.
  
 ##### Test Spec
+[System76 Oryx Pro 4](https://system76.com/laptops/oryx)
 ```
 OS: Ubuntu 18.04.1 LTS x86_64 
-Host: Oryx Pro oryp4 
+Host: Oryx Pro oryp4
 Kernel: 4.15.0-38-generic 
 Uptime: 34 mins 
 Packages: 2525 
