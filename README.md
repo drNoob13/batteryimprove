@@ -1,10 +1,10 @@
-# Improving Battery Life of Ultra-thin Ultrabooks with 6-/9-core CPU (Linux)
+# [Linux] Improving battery life + Reducing heat generation of Ultra-thin Laptop with 6-/9-core CPU
 
 
 
 ## Preface
 
-This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs, plus an automated method for keeping the laptops cool. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend.
+This post discusses a combined method to extend battery life of high-end laptops with 6-core or 9-core Intel CPUs while reducing the heat generation at the same time. The method sets CPU peformance differently depending on the power source (AC or battery) and uses TLP as a frontend for automation.
  
 ##### Test Spec
 ```
@@ -60,8 +60,8 @@ From the evaluation, method 1 can help oryx4 laptop last about 5 hours under lig
 
 ### Optional (but recommended)
 
-* [TLP](https://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html) to automate the setting below
-* powertop
+* [TLP](https://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html) to automate the setting below.
+* powertop (one should not run `powertop --auto-tune` at start-up to avoid conflict with TLP).
 
 
 ## Method Explained
