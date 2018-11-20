@@ -1,4 +1,4 @@
-# [Linux] Improving battery life + Reducing heat generation of Ultra-thin Laptop with 6-/9-core CPU
+# [Linux] Improving battery life + reducing heat generation of ultra-thin laptops with 6-/9-core CPUs
 
 
 
