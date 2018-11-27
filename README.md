@@ -1,4 +1,4 @@
-# [Linux] Improving battery life + reducing heat generation of ultra-thin laptops with 6-/9-core CPUs
+# [Linux] Improving battery life + reducing heat generation of ultra-thin laptops with 6+ physical-core CPU
 
 
 
@@ -11,7 +11,7 @@ This post discusses a combined method to extend battery life of high-end laptops
 
 * Intel p_state driver
 * Completely software method (will not harm your hardware)
-* Intel processors with 6-/8- physical cores
+* Intel processors with 6+ physical cores
 * Adjust perf for dynamic frequency downscaling, thus significantly reduce power consumption + heat
 * Disable unused CPU cores to maximize battery (not necessary for laptops with high-capacity battery)
 * Disable unused hardware in battery mode (ethernet/bluetooth..)
