@@ -66,7 +66,7 @@ CPU_HWP_ON_BAT=power
 CPU_MIN_PERF_ON_AC=0
 CPU_MAX_PERF_ON_AC=80
 CPU_MIN_PERF_ON_BAT=0
-CPU_MAX_PERF_ON_BAT=10
+CPU_MAX_PERF_ON_BAT=25
 
 # Set the CPU "turbo boost" feature: 0=disable, 1=allow
 # Requires an Intel Core i processor.
