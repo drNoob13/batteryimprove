@@ -19,27 +19,8 @@ This post discusses a combined method to extend battery life of high-end laptops
  
  
 ##### Test Spec
-[System76 Oryx Pro 4](https://system76.com/laptops/oryx)
-```
-OS: Ubuntu 18.04.1 LTS x86_64 
-Host: Oryx Pro oryp4
-Kernel: 4.15.0-38-generic 
-Uptime: 34 mins 
-Packages: 2525 
-Shell: bash 4.4.19 
-Resolution: 1920x1080 
-DE: GNOME 3.28.3 
-WM: GNOME Shell 
-WM Theme: Adwaita 
-Theme: Adwaita-dark [GTK2/3] 
-Icons: Ubuntu-mono-dark [GTK2/3] 
-Terminal: gnome-terminal 
-CPU: Intel i7-8750H (12) @ 2.200GHz 
-GPU: Intel Integrated Graphics (HD 630)
-GPU: NVIDIA GeForce GTX 1070 Mobile 
-Memory: 2639MiB / 31997MiB
-Drive: 01 500GB M2 SSD + 01 256GB M2 SSD
-```
+![Spec](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/oryx4_spec.png)
+Tested with Ubuntu 16.04.6 and Ubuntu 18.04.2 with latest kernel.
 
 ##### Battery:
 ```
