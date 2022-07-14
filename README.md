@@ -163,9 +163,9 @@ For example, I have a Logitech wireless usb mouse which becomes sluggish after `
 
 * Enter powertop: `sudo powertop`
 * Navigate to tab `Tunables`, find the entry related to the Logitech USB receiver or your device of interest. The current tuning status is marked as `Good` (not really) since `powertop` has tuned it.
-* ![Powertop](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune.png)
+  ![Powertop](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune.png)
 * We want to tell `powertop` to stop meddling in our mouse surfing business. To this end, we will select the highlighted entry (using the up/down buttons on your keyboard) and press enter to change its status from `Good` to `Bad`. Note that `Bad` does not indicate the highlighted device is malfunctioning or has gone rouge (power consumption-wise). It's just a way `powertop` tells us this device is not tuned.
-* ![Powertop_adjust_done](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune_manual_adjust.png)
+  ![Powertop_adjust_done](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune_manual_adjust.png)
 * My wireless usb mouse has now come back to life.
 ----
 
