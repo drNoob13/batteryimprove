@@ -149,10 +149,24 @@ Refer to the bash script (execute after restart on battery) [here](https://githu
 
 ### Tuning with powertop (runtime)
 
-* Often it requires a calibration `powertop --calibrate` on battery for an extended period of time before you can start to tune.
+* Often it requires a calibration `powertop --calibrate` on battery for an extended period of time before you can start to tune. You only need run this once.
 * Run `powertop --auto-tune` to let powertop tweak the bad processes that are eating your battery.
 * Refer to [reference](https://wiki.archlinux.org/index.php/powertop).
 * This should be done manually. Do not run `powertop --auto-tune` at startup to avoid conflict with TLP.
+
+
+### Fix sluggish USB devices after running powertop
+
+`powertop` usually tends to over tune all peripheral devices on battery. This can make our USB devices less responsive. To this end, we need to manually tell `powertop` not to adjust it.
+
+For example, I have a Logitech wireless usb mouse which becomes sluggish after `powertop --auto-tune` kicks in. There are two main parts in a wireless mouse communication, the transmitter in the mouse and a receiver that hooks up to the usb port on the PC. To tell `powertop` not to tweak the power consumption for my mouse, do as follows:
+
+* Enter powertop: `sudo powertop`
+* Navigate to tab `Tunables`, find the entry related to the Logitech USB receiver or your device of interest. The current tuning status is marked as `Good` (not really) since `powertop` has tuned it.
+* ![Powertop](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune.png)
+* We want to tell `powertop` to stop meddling in our mouse surfing business. To this end, we will select this entry and press enter to change the status from `Good` to `Bad`. Note that `Bad` does not indicate the highlighted device is malfunctioning or has gone rouge (power consumption-wise). It's just a way `powertop` tells us this device is not tuned.
+* ![Powertop_adjust_done](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/powertop_overtune_manual_adjust.png)
+* My wireless usb mouse has now come back to live.
 ----
 
 Hope it helps.
