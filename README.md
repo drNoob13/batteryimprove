@@ -20,7 +20,8 @@ This post discusses a combined method to extend battery life of high-end laptops
  
 ##### Test Spec
 ![Spec](https://github.com/drNoob13/batteryimprove/blob/master/Profiling/oryx4_spec.png)
-Tested with Ubuntu 16.04.6 and Ubuntu 18.04.2 with latest kernel.
+* Hardware: System76 oryx pro 4, Dell precision mobile workstation 7560, Dell XPS 15.
+* Distro: Tested with Ubuntu 16.04.6, Ubuntu 18.04.2, Pop!OS 20.04 with latest kernels. 
 
 ##### Battery:
 ```
